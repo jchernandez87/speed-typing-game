@@ -40,7 +40,7 @@ function App() {
   return (
     <div className="App">
       <h1>How fast do you type?</h1>
-      <textarea name="words" onChange={handleChange} value={words} />
+      <textarea disabled={!start} name="words" onChange={handleChange} value={words} />
       <h4>Time remaining: {timeRemaining}</h4>
       {timeRemaining === 0 ? (
         <button onClick={restart}>Try again !!</button>
