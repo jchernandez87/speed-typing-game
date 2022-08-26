@@ -8,6 +8,7 @@ function App() {
   const [timeRemaining, setTimeRemaining] = useState(startingTime);
   const [start, setStart] = useState(false);
   const [wordCount, setWordCount] = useState(0);
+  const [language, setLanguage] = useState(false)
 
   const calculateWords = (text) => {
     const strArr = text.split(" ");
@@ -31,6 +32,8 @@ function App() {
 
   const startGame = () => setStart(true);
 
+  const toggleLanguage = () => setLanguage(!language)
+
   const restart = () => {
     setTimeRemaining(startingTime);
     setWords("");
@@ -39,17 +42,18 @@ function App() {
 
   return (
     <div className="App">
-      <h1>How fast do you type?</h1>
+      <h1>{ language ? "Cuantas palabras puedes escribir?" : "How fast do you type?"}</h1>
       <textarea disabled={!start} name="words" onChange={handleChange} value={words} />
-      <h4>Time remaining: {timeRemaining}</h4>
+      <h4>{ language ? `Tiempo restante: ${timeRemaining}`: `Time remaining: ${timeRemaining}`}</h4>
       {timeRemaining === 0 ? (
-        <button onClick={restart}>Try again !!</button>
+        <button onClick={restart}>{ language ? "Intentalo de nuevo !!" : "Try again !!"}</button>
       ) : (
         <button disabled={start} onClick={startGame}>
-          Start
+          { language ? "Iniciar" : "Start"}
         </button>
       )}
-      <h1>Word count: {wordCount}</h1>
+      <h1>{ language ? `Numero de palabras: ${wordCount}`: `Word count: ${wordCount}`}</h1>
+      <button onClick={toggleLanguage}>{language ? "Cambiar idioma: eng" : "Change language: spa"}</button>
     </div>
   );
 }

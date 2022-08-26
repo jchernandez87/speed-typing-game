@@ -28,7 +28,7 @@ button {
 
 button:disabled {
   cursor: default;
-  color: gray;
+  background-color: #a5a2a2;
 }
 
 h1 {
@@ -48,5 +48,5 @@ textarea {
 }
 
 textarea:disabled {
-  background-color: gray;
+  background-color: #a5a2a2;
 }
