@@ -1,21 +1,24 @@
 import "./App.css";
-import { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
+import useCustom from "./useCustom";
 
 function App() {
-  const startingTime = 10;
-
-  const [words, setWords] = useState("");
-  const [timeRemaining, setTimeRemaining] = useState(startingTime);
-  const [start, setStart] = useState(false);
-  const [wordCount, setWordCount] = useState(0);
-  const [language, setLanguage] = useState(false)
-  const textareaRef = useRef(null)
-
-  const calculateWords = (text) => {
-    const strArr = text.split(" ");
-    const wordsNum = strArr.filter((word) => word !== "").length;
-    return wordsNum;
-  };
+  const [
+    words,
+    timeRemaining,
+    setTimeRemaining,
+    start,
+    setStart,
+    wordCount,
+    setWordCount,
+    language,
+    textareaRef,
+    calculateWords,
+    handleChange,
+    startGame,
+    toggleLanguage,
+    restart,
+  ] = useCustom();
 
   useEffect(() => {
     if (start && timeRemaining > 0) {
@@ -26,40 +29,42 @@ function App() {
     }
   }, [start, timeRemaining]);
 
-  const handleChange = (event) => {
-    const { value } = event.target;
-    setWords(value);
-  };
-
-  const startGame = () => {
-    setStart(true)
-    textareaRef.current.disabled = false
-    textareaRef.current.focus()
-
-  };
-
-  const toggleLanguage = () => setLanguage(!language)
-
-  const restart = () => {
-    setTimeRemaining(startingTime);
-    setWords("");
-    setWordCount(0);
-  };
-
   return (
     <div className="App">
-      <h1>{ language ? "Cuantas palabras puedes escribir?" : "How fast do you type?"}</h1>
-      <textarea ref={textareaRef} disabled={!start} name="words" onChange={handleChange} value={words} />
-      <h4>{ language ? `Tiempo restante: ${timeRemaining}`: `Time remaining: ${timeRemaining}`}</h4>
+      <h1>
+        {language
+          ? "Cuantas palabras puedes escribir?"
+          : "How fast do you type?"}
+      </h1>
+      <textarea
+        ref={textareaRef}
+        disabled={!start}
+        name="words"
+        onChange={handleChange}
+        value={words}
+      />
+      <h4>
+        {language
+          ? `Tiempo restante: ${timeRemaining}`
+          : `Time remaining: ${timeRemaining}`}
+      </h4>
       {timeRemaining === 0 ? (
-        <button onClick={restart}>{ language ? "Intentalo de nuevo !!" : "Try again !!"}</button>
+        <button onClick={restart}>
+          {language ? "Intentalo de nuevo !!" : "Try again !!"}
+        </button>
       ) : (
         <button disabled={start} onClick={startGame}>
-          { language ? "Iniciar" : "Start"}
+          {language ? "Iniciar" : "Start"}
         </button>
       )}
-      <h1>{ language ? `Numero de palabras: ${wordCount}`: `Word count: ${wordCount}`}</h1>
-      <button onClick={toggleLanguage}>{language ? "Cambiar idioma: eng" : "Change language: spa"}</button>
+      <h1>
+        {language
+          ? `Numero de palabras: ${wordCount}`
+          : `Word count: ${wordCount}`}
+      </h1>
+      <button onClick={toggleLanguage}>
+        {language ? "Cambiar idioma: eng" : "Change language: spa"}
+      </button>
     </div>
   );
 }
